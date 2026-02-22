@@ -12,16 +12,13 @@
   <title>Geometry Vibes | StaticQuasar931 Unblocked Game</title>
   <meta name="description" content="Play Geometry Vibes unblocked in your browser. Reaction-based arcade action inspired by Geometry Dash: avoid obstacles, traps, and spikes in waves and keep your arrow on the route as far as possible. Fullscreen Unity WebGL, school-safe by StaticQuasar931.">
 
+  <link rel="canonical" href="https://staticquasar931.github.io/Geometry-Vibes/">
 
- <link rel="canonical" href="https://staticquasar931.github.io/Geometry-Vibes/"> 
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Geometry Vibes | StaticQuasar931 Unblocked Game">
   <meta property="og:description" content="Reaction-based arcade game inspired by Geometry Dash. Avoid obstacles, traps, and spikes in waves and go as far as possible. Fullscreen Unity WebGL.">
   <meta property="og:image" content="https://cdn.jsdelivr.net/gh/StaticQuasar931/Images@main/icon.png">
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Geometry Vibes | StaticQuasar931 Unblocked Game">
   <meta name="twitter:description" content="Reaction-based arcade game inspired by Geometry Dash. Avoid obstacles, traps, and spikes and go as far as possible.">
@@ -162,7 +159,6 @@
     @keyframes slideIn{ from{opacity:0; transform:translateX(140px) scale(.96)} to{opacity:1; transform:translateX(0) scale(1)} }
     @keyframes slideOut{ from{opacity:1; transform:translateX(0) scale(1)} to{opacity:0; transform:translateX(140px) scale(.96)} }
 
-    /* Hidden SEO helper */
     .seo-hidden{
       position:absolute; width:1px; height:1px; overflow:hidden;
       clip:rect(1px,1px,1px,1px); white-space:nowrap;
@@ -199,13 +195,29 @@
     <div class="loadingOut">
       <div class="progress-bar" id="progress-bar"></div>
     </div>
+
     <canvas id="unity-canvas" data-pixel-art=""></canvas>
 
-    <script src="Build/GeometryVibes_V1_39.loader.js"></script>
     <script>
       // Leave warning (required)
       window.onbeforeunload = () => "Are you sure you want to leave? Your session may be interrupted.";
 
+      // Fix: Provide missing SDK hooks expected by the build
+      // This prevents "InitSDKJs is not defined" from crashing your game when the external SDK is not included.
+      (function(){
+        if (typeof window.InitSDKJs !== "function") {
+          window.InitSDKJs = function(){ return true; };
+        }
+        // Optional safe no-op stubs in case the build expects other SDK-style calls
+        if (typeof window.ShowInterstitial !== "function") window.ShowInterstitial = function(){};
+        if (typeof window.ShowRewarded !== "function") window.ShowRewarded = function(){};
+        if (typeof window.RequestReview !== "function") window.RequestReview = function(){};
+      })();
+    </script>
+
+    <script src="Build/GeometryVibes_V1_39.loader.js"></script>
+
+    <script>
       var canvas = document.querySelector("#unity-canvas");
       var progressBar = document.querySelector("#progress-bar");
       var gameContainer = document.querySelector("#gameContainer");
@@ -219,16 +231,19 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "GameVGames",
         productName: "Geometry Vibes",
-        productVersion: "1.0"
+        productVersion: "1.0",
+
+        // Fix: opt in to new persistent data sync behavior (removes that deprecation warning)
+        autoSyncPersistentDataPath: true
       };
 
       var scaleToFit;
       try { scaleToFit = !!JSON.parse(""); } catch (e) { scaleToFit = true; }
 
       function progressHandler(progress) {
-        var percent = (progress * 100) + '%';
+        var percent = (progress * 100) + "%";
         progressBar.style.background =
-          'linear-gradient(to right, white, white ' + percent + ', transparent ' + percent + ', transparent)';
+          "linear-gradient(to right, white, white " + percent + ", transparent " + percent + ", transparent)";
       }
 
       function onResize() {
@@ -258,25 +273,25 @@
 
       function checkOrientation(orientation) {
         if (orientation === "Portrait" && window.innerHeight < window.innerWidth) {
-          orientationWarning.style.display = 'block';
-          gameContainer.style.display = 'none';
-          orientationWarning.innerText = 'Please rotate your device to portrait mode.';
-          orientationImage.style.display = 'block';
+          orientationWarning.style.display = "block";
+          gameContainer.style.display = "none";
+          orientationWarning.innerText = "Please rotate your device to portrait mode.";
+          orientationImage.style.display = "block";
         } else if (orientation === "Landscape" && window.innerHeight > window.innerWidth) {
-          orientationWarning.style.display = 'block';
-          gameContainer.style.display = 'none';
-          orientationWarning.innerText = 'Please rotate your device to landscape mode.';
-          orientationImage.style.display = 'block';
+          orientationWarning.style.display = "block";
+          gameContainer.style.display = "none";
+          orientationWarning.innerText = "Please rotate your device to landscape mode.";
+          orientationImage.style.display = "block";
         } else {
-          orientationWarning.style.display = 'none';
-          gameContainer.style.display = 'block';
-          orientationImage.style.display = 'none';
+          orientationWarning.style.display = "none";
+          gameContainer.style.display = "block";
+          orientationImage.style.display = "none";
         }
       }
 
       function loadTemplateConfig() {
         var request = new XMLHttpRequest();
-        request.open('GET', 'TemplateData/Orientation/template.json', true);
+        request.open("GET", "TemplateData/Orientation/template.json", true);
         request.onreadystatechange = function() {
           if (request.readyState === 4 && request.status === 200) {
             var cfg = JSON.parse(request.responseText);
@@ -289,11 +304,11 @@
 
       createUnityInstance(canvas, config, progressHandler).then(function(instance) {
         canvas = instance.Module.canvas;
-        myGameInstance = instance;
+        window.myGameInstance = instance;
         onResize();
       });
 
-      window.addEventListener('resize', function() {
+      window.addEventListener("resize", function() {
         onResize();
         loadTemplateConfig();
       });
@@ -402,21 +417,13 @@
   <div class="seo-hidden" aria-hidden="true">
     <h1>Geometry Vibes unblocked game</h1>
     <p>
-      Geometry Vibes is a reaction-based arcade game where you avoid obstacles, traps, and spikes that come at you in waves.
+      Geometry Vibes is a reaction-based arcade game where you avoid obstacles, traps and spikes that come at you in waves.
       Your goal is to keep your arrow on the route and take it as far as possible. Geometry Vibes is inspired by Geometry Dash.
       Play Geometry Vibes unblocked, working at school, school-safe, fullscreen Unity WebGL.
     </p>
-
     <p>
-      Brand keywords: StaticQuasar931, Static Quasar 931, Static931, static, staticquasar, staticquasar931, static 931, staticq, staticq931, 931.
+      Brand keywords: StaticQuasar931, staticquasar931, static quasar 931, static931, static, staticquasar, static 931, staticq, staticq931, 931.
       Links: https://sites.google.com/view/staticquasar931/gm3z | https://sites.google.com/view/staticquasar931/google-form | https://discord.gg/DP2hM7RRhR | https://www.instagram.com/freeschoolgamepage/
-    </p>
-
-    <p>
-      SEO keywords: geometry vibes unblocked, geometry vibes game unblocked, geometry vibes g@me unblocked, geometry vibes working at school,
-      geometry vibes school, geometry vibes school-safe, geometry vibes webgl, geometry vibes unity, geometry vibes geometry dash inspired,
-      geometry vibes reaction game, geometry vibes arcade game, geometry vibes unbl0cked, staticquasar931 geometry vibes, static 931 geometry vibes,
-      StaticQuasar931 unblocked games, unblocked games by static, free school games, g@mes unblocked, games unblocked, game unblocked.
     </p>
   </div>
 </body>
