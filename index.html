@@ -199,19 +199,31 @@
     <canvas id="unity-canvas" data-pixel-art=""></canvas>
 
     <script>
-      // Leave warning (required)
       window.onbeforeunload = () => "Are you sure you want to leave? Your session may be interrupted.";
 
       // Fix: Provide missing SDK hooks expected by the build
-      // This prevents "InitSDKJs is not defined" from crashing your game when the external SDK is not included.
+      // These are safe no-op stubs so the game won't crash if ads/SDK scripts are not present.
       (function(){
-        if (typeof window.InitSDKJs !== "function") {
-          window.InitSDKJs = function(){ return true; };
-        }
-        // Optional safe no-op stubs in case the build expects other SDK-style calls
-        if (typeof window.ShowInterstitial !== "function") window.ShowInterstitial = function(){};
-        if (typeof window.ShowRewarded !== "function") window.ShowRewarded = function(){};
-        if (typeof window.RequestReview !== "function") window.RequestReview = function(){};
+        const ensureFn = (name, fn) => {
+          if (typeof window[name] !== "function") window[name] = fn;
+        };
+
+        ensureFn("InitSDKJs", function(){ return true; });
+
+        // Your new crash:
+        ensureFn("CallInterstitialAdsJs", function(){
+          // no-op: game continues without showing an interstitial
+          return true;
+        });
+
+        // Common companions (prevents future "not defined" crashes)
+        ensureFn("CallRewardedAdsJs", function(){ return true; });
+        ensureFn("IsRewardedReadyJs", function(){ return false; });
+        ensureFn("IsInterstitialReadyJs", function(){ return false; });
+
+        // Legacy/simple names some templates use
+        ensureFn("ShowInterstitial", function(){});
+        ensureFn("ShowRewarded", function(){});
       })();
     </script>
 
@@ -232,8 +244,6 @@
         companyName: "GameVGames",
         productName: "Geometry Vibes",
         productVersion: "1.0",
-
-        // Fix: opt in to new persistent data sync behavior (removes that deprecation warning)
         autoSyncPersistentDataPath: true
       };
 
