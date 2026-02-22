@@ -14,6 +14,12 @@
 
   <link rel="canonical" href="https://staticquasar931.github.io/Geometry-Vibes/">
 
+  <!-- SEO keyword coverage -->
+  <meta name="keywords" content="geometry vibes unblocked, geometry vibes game unblocked, geometry vibes school, geometry vibes working at school, geometry vibes play at school, geometry vibes fullscreen, geometry vibes unity webgl, geometry vibes browser game, geometry vibes arcade game, geometry vibes reaction game, geometry vibes geometry dash inspired, geometry vibes dash game, geometry vibes spikes, geometry vibes obstacles, geometry vibes traps, geometry vibes wave mode, geometry vibes arrow game, geometry vibes route game, geometry vibes no download, geometry vibes free game, geometry vibes online game,
+  geometry vibes unbl0cked, geometry vibes unblocked g@me, geometry vibes g@mes, geometry vibes g@me unblocked, geometry vibes g@me school, geometry vibes g@me working at school,
+  unblocked games, unblocked game, unblocked g@mes, unblocked g@me, school safe games, school-safe games, games for school, games working at school, browser games unblocked, unity games unblocked, unity webgl unblocked,
+  StaticQuasar931, staticquasar931, static quasar 931, static 931, static931, static, staticquasar, staticq, staticq931, 931, StaticQuasar931 unblocked games, StaticQuasar931 games, StaticQuasar931 g@mes">
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="Geometry Vibes | StaticQuasar931 Unblocked Game">
   <meta property="og:description" content="Reaction-based arcade game inspired by Geometry Dash. Avoid obstacles, traps, and spikes in waves and go as far as possible. Fullscreen Unity WebGL.">
@@ -23,6 +29,24 @@
   <meta name="twitter:title" content="Geometry Vibes | StaticQuasar931 Unblocked Game">
   <meta name="twitter:description" content="Reaction-based arcade game inspired by Geometry Dash. Avoid obstacles, traps, and spikes and go as far as possible.">
   <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/StaticQuasar931/Images@main/icon.png">
+
+  <!-- Optional structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Geometry Vibes",
+    "description": "Reaction-based arcade action inspired by Geometry Dash: avoid obstacles, traps, and spikes in waves and keep your arrow on the route as far as possible. Fullscreen Unity WebGL, school-safe by StaticQuasar931.",
+    "url": "https://staticquasar931.github.io/Geometry-Vibes/",
+    "image": "https://cdn.jsdelivr.net/gh/StaticQuasar931/Images@main/icon.png",
+    "applicationCategory": "Game",
+    "operatingSystem": "Web",
+    "author": {
+      "@type": "Person",
+      "name": "StaticQuasar931"
+    }
+  }
+  </script>
 
   <style>
     :root{
@@ -125,6 +149,43 @@
       z-index: 10000;
     }
 
+    /* Unity error overlay (prevents silent "black screen") */
+    #unity-error {
+      display: none;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(92vw, 620px);
+      background: rgba(20,20,28,.92);
+      border: 1px solid rgba(94,225,255,.35);
+      box-shadow: var(--glow), var(--shadow);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      z-index: 10001;
+      color: #eaf4ff;
+    }
+    #unity-error h2{
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+    #unity-error p{
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      line-height: 1.35;
+      opacity: .95;
+    }
+    #unity-error button{
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.08);
+      color: #eaf4ff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
     /* Visual SEO: Static Menu (top-left) */
     #staticMenu{
       position:fixed; left:12px; top:12px; z-index:9999;
@@ -141,6 +202,20 @@
       border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06)
     }
     @keyframes menuEnter{ from{opacity:0; transform:translateY(-8px)} to{opacity:1; transform:translateY(0)} }
+
+    /* Game label block under Static Menu */
+    #staticGameLabel{
+      position:fixed; left:12px; top:58px; z-index:9999;
+      display:block; user-select:none;
+      padding:10px 14px; border-radius:12px;
+      background:linear-gradient(135deg, rgba(20,20,28,.9), rgba(20,20,28,.6));
+      border:1px solid rgba(94,225,255,.25);
+      color:#e8f3ff; box-shadow:var(--shadow);
+      font-size:13px;
+      animation:menuEnter .6s ease .2s both;
+    }
+    #staticGameLabel b{ color:#ffffff }
+    #staticGameLabel .sub{ opacity:.85; font-weight:700; color:#bfefff }
 
     /* Visual SEO: Rotating slide-in widget (bottom-right) */
     #staticSlideMenu{
@@ -159,6 +234,14 @@
     @keyframes slideIn{ from{opacity:0; transform:translateX(140px) scale(.96)} to{opacity:1; transform:translateX(0) scale(1)} }
     @keyframes slideOut{ from{opacity:1; transform:translateX(0) scale(1)} to{opacity:0; transform:translateX(140px) scale(.96)} }
 
+    /* Subtle twinkle on the top-left link */
+    @keyframes twinkle {
+      0%, 92% { text-shadow: none; filter: none; }
+      95% { text-shadow: 0 0 10px rgba(94,225,255,.85); filter: brightness(1.2); }
+      100% { text-shadow: none; filter: none; }
+    }
+    #staticMenu a{ animation: twinkle 6.5s infinite; }
+
     .seo-hidden{
       position:absolute; width:1px; height:1px; overflow:hidden;
       clip:rect(1px,1px,1px,1px); white-space:nowrap;
@@ -166,7 +249,9 @@
 
     @media (max-width:600px){
       #staticMenu{ font-size:13px; padding:8px 12px }
+      #staticGameLabel{ font-size:12.5px; top:54px; padding:9px 12px }
       #staticSlideMenu{ width:88px; height:88px }
+      .centered{ width: 320px; margin-left: -160px; margin-top: -130px; }
     }
   </style>
 </head>
@@ -176,6 +261,12 @@
   <div id="staticMenu" role="region" aria-label="StaticQuasar menu">
     <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener">More Unblocked Games by Static</a>
     <span id="closeStaticMenu" title="Hide temporarily">✕</span>
+  </div>
+
+  <!-- Game label block -->
+  <div id="staticGameLabel" role="note" aria-label="Game label">
+    <b>Geometry Vibes</b><br>
+    <span class="sub">alternate (unblocked)</span>
   </div>
 
   <!-- Visual SEO: Rotating widget -->
@@ -190,6 +281,12 @@
     <div>Please rotate your device to the correct mode.</div>
   </div>
 
+  <div id="unity-error" role="alert" aria-live="assertive">
+    <h2>Game did not load</h2>
+    <p id="unity-error-text">If you are on a restricted network, try refreshing. If it still fails, try a different browser or disable aggressive blockers for this site.</p>
+    <button id="unity-retry" type="button">Reload</button>
+  </div>
+
   <div id="gameContainer">
     <img src="TemplateData/logo.png" class="centered" alt="Geometry Vibes logo">
     <div class="loadingOut">
@@ -201,8 +298,7 @@
     <script>
       window.onbeforeunload = () => "Are you sure you want to leave? Your session may be interrupted.";
 
-      // Fix: Provide missing SDK hooks expected by the build
-      // These are safe no-op stubs so the game won't crash if ads/SDK scripts are not present.
+      // Safe SDK stubs: prevents crashes if build expects ads/SDK functions.
       (function(){
         const ensureFn = (name, fn) => {
           if (typeof window[name] !== "function") window[name] = fn;
@@ -210,18 +306,11 @@
 
         ensureFn("InitSDKJs", function(){ return true; });
 
-        // Your new crash:
-        ensureFn("CallInterstitialAdsJs", function(){
-          // no-op: game continues without showing an interstitial
-          return true;
-        });
-
-        // Common companions (prevents future "not defined" crashes)
+        ensureFn("CallInterstitialAdsJs", function(){ return true; });
         ensureFn("CallRewardedAdsJs", function(){ return true; });
         ensureFn("IsRewardedReadyJs", function(){ return false; });
         ensureFn("IsInterstitialReadyJs", function(){ return false; });
 
-        // Legacy/simple names some templates use
         ensureFn("ShowInterstitial", function(){});
         ensureFn("ShowRewarded", function(){});
       })();
@@ -235,6 +324,20 @@
       var gameContainer = document.querySelector("#gameContainer");
       var orientationWarning = document.querySelector("#orientation-warning");
       var orientationImage = document.querySelector("#orientation-image");
+
+      var unityError = document.getElementById("unity-error");
+      var unityErrorText = document.getElementById("unity-error-text");
+      var unityRetry = document.getElementById("unity-retry");
+
+      function showUnityError(msg){
+        try{
+          if (unityErrorText && msg) unityErrorText.textContent = msg;
+          if (unityError) unityError.style.display = "block";
+        }catch(e){}
+      }
+      if (unityRetry){
+        unityRetry.addEventListener("click", function(){ location.reload(); });
+      }
 
       var config = {
         dataUrl: "Build/GeometryVibes_V1_39.data.unityweb",
@@ -303,20 +406,36 @@
         var request = new XMLHttpRequest();
         request.open("GET", "TemplateData/Orientation/template.json", true);
         request.onreadystatechange = function() {
-          if (request.readyState === 4 && request.status === 200) {
-            var cfg = JSON.parse(request.responseText);
-            var orientation = cfg.customOptions.find(option => option.name === "orientation").default;
-            checkOrientation(orientation);
+          if (request.readyState === 4) {
+            if (request.status === 200) {
+              try{
+                var cfg = JSON.parse(request.responseText);
+                var opt = (cfg && cfg.customOptions) ? cfg.customOptions.find(function(option){ return option.name === "orientation"; }) : null;
+                var orientation = opt ? opt.default : null;
+                if (orientation) checkOrientation(orientation);
+              }catch(e){}
+            }
           }
         };
         request.send();
       }
 
-      createUnityInstance(canvas, config, progressHandler).then(function(instance) {
-        canvas = instance.Module.canvas;
-        window.myGameInstance = instance;
-        onResize();
-      });
+      function startUnity(){
+        if (typeof createUnityInstance !== "function") {
+          showUnityError("Unity loader failed to initialize. Please refresh the page.");
+          return;
+        }
+
+        createUnityInstance(canvas, config, progressHandler).then(function(instance) {
+          canvas = instance.Module.canvas;
+          window.myGameInstance = instance;
+          onResize();
+        }).catch(function(err){
+          var msg = "Unity failed to load. Try refreshing, or try another browser. Details: " + (err && err.message ? err.message : String(err));
+          showUnityError(msg);
+          try{ console.error(err); }catch(e){}
+        });
+      }
 
       window.addEventListener("resize", function() {
         onResize();
@@ -324,16 +443,21 @@
       });
 
       loadTemplateConfig();
+      startUnity();
 
       // Visual SEO: Static Menu show/hide with 3 minute return
       (function(){
         const menu = document.getElementById("staticMenu");
+        const label = document.getElementById("staticGameLabel");
         const btn  = document.getElementById("closeStaticMenu");
         const KEY  = "sq931_staticMenu_hidden_until";
-        const show = () => { if (menu) menu.style.display = "flex"; };
+        const show = () => {
+          if (menu) menu.style.display = "flex";
+          if (label) label.style.display = "block";
+        };
         const hideFor3m = () => {
-          if (!menu) return;
-          menu.style.display = "none";
+          if (menu) menu.style.display = "none";
+          if (label) label.style.display = "none";
           const until = Date.now() + 180000;
           localStorage.setItem(KEY, String(until));
           setTimeout(show, 180000);
@@ -341,6 +465,7 @@
         const until = parseInt(localStorage.getItem(KEY)||"0", 10);
         if (until && Date.now() < until){
           if (menu) menu.style.display = "none";
+          if (label) label.style.display = "none";
           setTimeout(show, until - Date.now());
         } else {
           show();
@@ -365,13 +490,13 @@
           link: "https://discord.gg/DP2hM7RRhR"
         };
         const INSTA = {
-          src:  "https://cdn.jsdelivr.net/gh/StaticQuasar931/Images@main/Follow-us--IG",
+          src:  "https://cdn.jsdelivr.net/gh/StaticQuasar931/Images@main/Follow-us--IG.png",
           alt:  "StaticQuasar931 Instagram",
           link: "https://www.instagram.com/freeschoolgamepage/"
         };
         const ROTATION = [FORM, DISCORD, INSTA];
 
-        ROTATION.forEach(o => { const p = new Image(); p.src = o.src; });
+        ROTATION.forEach(function(o){ var p = new Image(); p.src = o.src; });
 
         const T_IN = 2000, T_SHOW = 5000, T_OUT = 2000, T_HIDDEN = 20000;
         let idx = 0;
@@ -380,10 +505,20 @@
           a.href = state.link;
           img.alt = state.alt;
           img.style.opacity = "0";
-          setTimeout(() => { img.src = state.src; }, 80);
-          img.onload = () => { img.style.opacity = "1"; };
+
+          // Avoid flicker and avoid stuck opacity when an image fails
+          const nextSrc = state.src;
+          const tmp = new Image();
+          tmp.onload = function(){
+            img.src = nextSrc;
+            img.style.opacity = "1";
+          };
+          tmp.onerror = function(){
+            img.style.opacity = "1";
+          };
+          tmp.src = nextSrc;
         }
-        function delay(ms){ return new Promise(r => setTimeout(r, ms)); }
+        function delay(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
 
         (async function cycle(){
           for(;;){
@@ -404,19 +539,20 @@
 
       // Visual SEO: y + u + i toggles all Visual SEO
       (function(){
-        const idsToToggle = ["staticMenu", "staticSlideMenu"];
+        const idsToToggle = ["staticMenu", "staticGameLabel", "staticSlideMenu"];
         let seq = [];
         const target = ["y","u","i"];
         function toggle(){
-          idsToToggle.forEach(id=>{
+          idsToToggle.forEach(function(id){
             const el = document.getElementById(id);
             if(!el) return;
             const isHidden = (el.style.display === "none" || getComputedStyle(el).display === "none");
-            el.style.display = isHidden ? (id === "staticMenu" ? "flex" : "block") : "none";
+            if (id === "staticMenu") el.style.display = isHidden ? "flex" : "none";
+            else el.style.display = isHidden ? (id === "staticSlideMenu" ? "block" : "block") : "none";
           });
         }
-        window.addEventListener("keydown", (e)=>{
-          seq.push(e.key.toLowerCase());
+        window.addEventListener("keydown", function(e){
+          seq.push(String(e.key || "").toLowerCase());
           if (seq.length > 3) seq.shift();
           if (seq.join("") === target.join("")) toggle();
         });
@@ -424,16 +560,28 @@
     </script>
   </div>
 
+  <!-- Hidden SEO content (200+ words, absolute links, maximum keyword coverage) -->
   <div class="seo-hidden" aria-hidden="true">
     <h1>Geometry Vibes unblocked game</h1>
+
     <p>
-      Geometry Vibes is a reaction-based arcade game where you avoid obstacles, traps and spikes that come at you in waves.
-      Your goal is to keep your arrow on the route and take it as far as possible. Geometry Vibes is inspired by Geometry Dash.
-      Play Geometry Vibes unblocked, working at school, school-safe, fullscreen Unity WebGL.
+      Geometry Vibes is a fast reaction arcade game inspired by Geometry Dash style gameplay. You control an arrow and try to stay on the route while obstacles, traps, and spikes arrive in timed waves. The goal is simple: survive as long as possible, learn the rhythm of each pattern, and keep pushing your best distance. This version is fullscreen Unity WebGL and is designed to run directly in your browser with no download. If the game ever loads slowly at school or on a restricted network, a refresh can help, and trying another browser can also improve performance.
     </p>
+
     <p>
-      Brand keywords: StaticQuasar931, staticquasar931, static quasar 931, static931, static, staticquasar, static 931, staticq, staticq931, 931.
-      Links: https://sites.google.com/view/staticquasar931/gm3z | https://sites.google.com/view/staticquasar931/google-form | https://discord.gg/DP2hM7RRhR | https://www.instagram.com/freeschoolgamepage/
+      Looking for Geometry Vibes unblocked, Geometry Vibes working at school, Geometry Vibes school-safe, Geometry Vibes free online game, Geometry Vibes browser game, Geometry Vibes Unity WebGL, Geometry Vibes fullscreen, or Geometry Vibes geometry dash inspired? This page targets those searches and includes extra keyword variants people type such as unblocked, unbl0cked, game, g@me, games, and g@mes. StaticQuasar931 also uses brand keywords for search discovery: StaticQuasar931, staticquasar931, static quasar 931, static 931, static931, static, staticquasar, staticq, staticq931, and 931.
+    </p>
+
+    <p>
+      More unblocked games by Static: https://sites.google.com/view/staticquasar931/gm3z
+      Home: https://sites.google.com/view/staticquasar931
+      Requests and feedback form: https://sites.google.com/view/staticquasar931/google-form
+      Discord: https://discord.gg/DP2hM7RRhR
+      Instagram: https://www.instagram.com/freeschoolgamepage/
+    </p>
+
+    <p>
+      Search phrases: Geometry Vibes unblocked game, Geometry Vibes unblocked g@me, Geometry Vibes school game, Geometry Vibes working at school, Geometry Vibes safe at school, Geometry Vibes online game, Geometry Vibes browser g@me, Geometry Vibes Unity game, Unity WebGL unblocked games, unblocked arcade games, school-safe unblocked games, and more StaticQuasar931 unblocked games.
     </p>
   </div>
 </body>
